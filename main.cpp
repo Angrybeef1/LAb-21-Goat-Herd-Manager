@@ -29,6 +29,9 @@ class Goat {
 
             return os;
         }
+    bool operator==(const Goat& other) const {
+        return (age == other.age && name == other.name && color == other.color);
+    }
 };
 
 const string Goat :: names[] = {"Billy", "Nanny", "Gruff", "Daisy", "Pepper", 
@@ -82,7 +85,7 @@ public:
         }
     }
 
-    void insert_after(int value, int position) {
+    void insert_after(const Goat& value, int position) {
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
             return;
@@ -113,11 +116,11 @@ public:
         temp->next = newNode;
     }
 
-    void delete_node(int value) {
+    void delete_node(const Goat& value) {
         if (!head) return; // Empty list
 
         Node* temp = head;
-        while (temp && temp->data != value)
+        while (temp && temp->data == value)
             temp = temp->next;
 
         if (!temp) return; // Value not found
@@ -139,22 +142,25 @@ public:
 
     void print() {
         Node* current = head;
-        if (!current) return;
+        if (!current) {
+            cout << "List is empty" << endl;
+            return;
+        }
         while (current) {
-            cout << current->data << " ";
+            cout << current->data << endl;;
             current = current->next;
         }
-        cout << endl;
     }
 
     void print_reverse() {
-        Node* current = tail;
-        if (!current) return;
+        if (!current) {
+            cout << "List is empty" << endl;
+            return;
+        }
         while (current) {
-            cout << current->data << " ";
+            cout << current->data << endl;
             current = current->prev;
         }
-        cout << endl;
     }
 
     ~DoublyLinkedList() {
@@ -168,11 +174,15 @@ public:
 
 // Driver program
 int main() {
+    srand(time(0)); //randomnumber generator
+
     DoublyLinkedList list;
+
     int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
 
     for (int i = 0; i < size; ++i)
-        list.push_back(rand() % (MAX_NR-MIN_NR+1) + MIN_NR);
+        list.push_back(Goat());
+
     cout << "List forward: ";
     list.print();
 
