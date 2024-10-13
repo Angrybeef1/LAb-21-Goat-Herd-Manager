@@ -142,23 +142,26 @@ public:
 
     void print() {
         Node* current = head;
+        cout << "List Forward: " << endl;
         if (!current) {
-            cout << "List is empty" << endl;
+            cout << "\tList is empty" << endl;
             return;
         }
         while (current) {
-            cout << current->data << endl;;
+            cout << "\t" << current->data << endl;;
             current = current->next;
         }
     }
 
     void print_reverse() {
+        Node* current = tail;
+        cout << "List backward:" << endl;
         if (!current) {
-            cout << "List is empty" << endl;
+            cout << "\tList is empty" << endl;
             return;
         }
         while (current) {
-            cout << current->data << endl;
+            cout << "\t" << current->data << endl;
             current = current->prev;
         }
     }
@@ -183,10 +186,10 @@ int main() {
     for (int i = 0; i < size; ++i)
         list.push_back(Goat());
 
-    cout << "List forward: ";
+    cout << "List forward: \n";
     list.print();
 
-    cout << "List backward: ";
+    cout << "List backward: \n";
     list.print_reverse();
 
     cout << "Deleting list, then trying to print.\n";
