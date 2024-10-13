@@ -1,22 +1,56 @@
 //COMSC 210 | Lab 21 Goat Herder | Robert Stonemetz
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
+class Goat {
+    private:
+        int age;
+        string name;
+        string color;
+        static const string names[];
+        static const string colors[];
+
+    public:
+        Goat() {
+            age = rand() % 20 + 1;
+            name = names[rand() % 15];
+            color = colors[rand() % 15];
+        }
+
+        Goat(int a, string n, string c) : age(a), name(n), color(c) {}
+
+        friend ostream& operator << (ostream& os, const Goat& goat) {
+            os << goat.name << " (" << goat.color << ", " << goat.age << ")";
+
+            return os;
+        }
+};
+
+const string Goat :: names[] = {"Billy", "Nanny", "Gruff", "Daisy", "Pepper", 
+                                "Snowball", "Buttercup", "Rocky", "Luna", "Charlie", 
+                                "Bella", "Max", "Lucy", "Oreo", "Gizmo"};
+
+const string Goat::colors[] = {"White", "Black", "Brown", "Gray", "Cream", "Tan", "Beige", 
+                                "Spotted", "Speckled", "Patched", "Mottled", "Dappled", "Piebald", 
+                                "Roan", "Tricolor"};
+
+
+
 class DoublyLinkedList {
 private:
     struct Node {
-        int data;
+        Goat data;
         Node* prev;
         Node* next;
-        Node(int val, Node* p = nullptr, Node* n = nullptr) {
-            data = val; 
-            prev = p;
-            next = n;
-        }
+        Node(const Goat& val, Node* p = nullptr, Node* n = nullptr) : 
+            data(val), 
+            prev(p), 
+            next(n) {}
     };
 
     Node* head;
@@ -26,7 +60,7 @@ public:
     // constructor
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
-    void push_back(int value) {
+    void push_back(const Goat& value) {
         Node* newNode = new Node(value);
         if (!tail)  // if there's no tail, the list is empty
             head = tail = newNode;
@@ -37,7 +71,7 @@ public:
         }
     }
 
-    void push_front(int value) {
+    void push_front(const Goat& value) {
         Node* newNode = new Node(value);
         if (!head)  // if there's no head, the list is empty
             head = tail = newNode;
